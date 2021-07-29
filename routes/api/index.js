@@ -1,18 +1,39 @@
 const router = require("express").Router();
-const { Workouts } = require("../../models")
+const { Workouts } = require("../../models");
 
-router.get("/workouts", async (req, res, next) => {
-    console.log('workouts:', Workouts)
-    try{
-    // read the workouts from db
-    const workouts = await Workouts.find();
-    res.json(workouts)
-    //send workouts
-    } catch(e) {
-        next(e)
-    }
-    
+router.get("/workouts", async (req, res) => {
+  console.log("workouts:", Workouts);
+
+  Workouts.aggregate([
+    {
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" },
+      },
+    },
+  ])
+    .then((dbWorkouts) => {
+      res.json(dbWorkouts);
+    })
+    .catch((e) => {
+      res.json(e);
+    });
+});
+
+router.post('/workouts', (req, res) => {
+  Workouts.create({})
+  .then((dbWorkouts) => {
+    res.json(dbWorkouts);
+  })
+  .catch((e) => {
+    res.json(e);
   });
+})
 
+router.put('/workouts/:id', (req, res, next) => {
+Workouts.findByIdAndUpdate(
+  req.params.id,
+  {$push: {'exercises':}}
+)
 
+});
 module.exports = router;

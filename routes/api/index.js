@@ -17,7 +17,7 @@ router.get("/workouts", async (req, res) => {
     });
 });
 
-router.post("/workouts", (req, res) => {
+router.post("/workouts", ({ body }, req, res) => {
   Workouts.create(body)
     .then((workout_tracker) => {
       res.json(workout_tracker);

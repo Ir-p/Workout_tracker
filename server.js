@@ -17,8 +17,10 @@ app.use(express.static("public"));
 app.use(require("./routes/index.js"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populatedb", { useNewUrlParser: true, 
-useFindAndModify: false,
-useUnifiedTopology: true
+useNewUrlParser: true,
+useUnifiedTopology: true,
+useCreateIndex: true,
+useFindAndModify: false
  }).then(()=>{
 
     app.listen(PORT, () => {

@@ -1,11 +1,12 @@
-const router = require("express").Router();
-const apiRoutes = require("./api");
-const homeRoutes = require("./homeRoutes");
-const updateRoutes = require("./update-route");
+const router = require('express').Router();
+const path = require('path');
 
-// API routes
-router.use("/api", apiRoutes);
-router.use("/", homeRoutes);
-router.use("/", updateRoutes);
+router.get('/exercise', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/exercise.html"))
+});
+
+router.get('/stats', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/stats.html"))
+});
 
 module.exports = router;

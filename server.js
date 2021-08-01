@@ -17,9 +17,9 @@ app.use(express.static("public"));
 app.use(require("./routes/api.js"));
 app.use(require("./routes/index.js"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populatedb", { useNewUrlParser: true, 
-useNewUrlParser: true,
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populatedb", {  
 useFindAndModify: false,
+useUnifiedTopology: true 
  }).then(()=>{
 
     app.listen(PORT, () => {
